@@ -38,6 +38,36 @@ const Pipeline = () => {
                     }) => Logger.print(id, status.toUpperCase(), created_at, web_url))
                 })
             })
+        },
+        get: {
+            command: 'pipeline-get <projectId> <id>',
+            describe: 'Get pipeline status',
+            builder: (yargs) => {
+                yargs
+                    .positional('projectId', {
+                        describe: 'projectId for which pipelines are fetched'
+                    })
+                    .positional('id', {
+                        describe: 'pipeline id'
+                    })
+            },
+            handler: catchAll(async (argv) => {
+                const data = await PipelineService.get(argv.projectId, argv.id)
+
+                resolveResult(data, () => {
+                    Object.keys(data).forEach((key) => {
+                        switch (key) {
+                        case 'user':
+                            Logger.print(`${key}:`, data[key].name)
+                            break
+                        case 'detailed_status':
+                            break
+                        default:
+                            Logger.print(`${key}:`, data[key])
+                        }
+                    })
+                })
+            })
         }
     })
 }
