@@ -12,7 +12,13 @@ const PipelineService = () => {
 
             return ApiService.fetch(`/projects/${projectId}/pipelines?${urlParams.toString()}`, { method: 'GET' })
         },
-        get: async (projectId, id, entity) => ApiService.fetch(`/projects/${projectId}/pipelines/${id}/${entity ? `/${entity}` : ''}`, { method: 'GET' })
+        get: async (projectId, id, entity) => ApiService.fetch(`/projects/${projectId}/pipelines/${id}/${entity ? `/${entity}` : ''}`, { method: 'GET' }),
+        create: async (projectId, ref) => ApiService.fetch(`/projects/${projectId}/pipeline?ref=${ref}`, {
+            method: 'POST',
+            body: JSON.stringify({
+                variables: []
+            })
+        })
     })
 }
 

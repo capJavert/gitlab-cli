@@ -77,6 +77,29 @@ const Pipeline = () => {
                     })
                 })
             })
+        },
+        create: {
+            command: 'pipeline-create <projectId> <ref>',
+            describe: 'Start new pipeline',
+            builder: (yargs) => {
+                yargs
+                    .positional('projectId', {
+                        describe: 'projectId for which pipelines are fetched'
+                    })
+                    .positional('ref', {
+                        describe: 'reference to commit'
+                    })
+            },
+            handler: catchAll(async (argv) => {
+                const data = await PipelineService.create(
+                    argv.projectId,
+                    argv.ref
+                )
+
+                resolveResult(data, () => {
+                    Logger.print(`Pipeline #${data.id} created and ${data.status}...`)
+                })
+            })
         }
     })
 }
