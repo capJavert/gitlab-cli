@@ -19,6 +19,9 @@ const PipelineService = () => {
                 variables: []
             })
         }),
+        update: async (projectId, id, action) => ApiService.fetch(`/projects/${projectId}/pipelines/${id}/${action ? `/${action}` : ''}`, {
+            method: 'POST'
+        }),
         delete: async (projectId, id) => ApiService.fetch(`/projects/${projectId}/pipelines/${id}`, {
             method: 'DELETE'
         })

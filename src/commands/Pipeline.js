@@ -102,6 +102,34 @@ const Pipeline = () => {
                 })
             })
         },
+        update: {
+            command: 'pipeline-update <projectId> <id> <action>',
+            describe: 'Update pipeline status',
+            builder: (yargs) => {
+                yargs
+                    .positional('projectId', {
+                        describe: 'projectId for which pipelines are fetched'
+                    })
+                    .positional('id', {
+                        describe: 'pipeline id'
+                    })
+                    .positional('action', {
+                        describe: 'action to perform on pipeline',
+                        choices: ['retry', 'cancel']
+                    })
+            },
+            handler: catchAll(async (argv) => {
+                const data = await PipelineService.update(
+                    argv.projectId,
+                    argv.id,
+                    argv.action
+                )
+
+                resolveResult(data, () => {
+                    Logger.print(`Pipeline #${data.id} updated and ${data.status}...`)
+                })
+            })
+        },
         delete: {
             command: 'pipeline-delete <projectId> <id>',
             describe: 'Delete pipeline',
