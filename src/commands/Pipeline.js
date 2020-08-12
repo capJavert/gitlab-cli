@@ -1,3 +1,4 @@
+const prompt = require('inquirer').createPromptModule()
 const { PipelineService, Logger } = require('../services')
 const {
     resolveResult, catchAll
@@ -98,6 +99,34 @@ const Pipeline = () => {
 
                 resolveResult(data, () => {
                     Logger.print(`Pipeline #${data.id} created and ${data.status}...`)
+                })
+            })
+        },
+        delete: {
+            command: 'pipeline-delete <projectId> <id>',
+            describe: 'Delete pipeline',
+            builder: (yargs) => {
+                yargs
+                    .positional('projectId', {
+                        describe: 'projectId for which pipelines are fetched'
+                    })
+                    .positional('id', {
+                        describe: 'pipeline id'
+                    })
+            },
+            handler: catchAll(async (argv) => {
+                const { deleteConfirmed } = await prompt([{
+                    name: 'deleteConfirmed', type: 'confirm', message: `Are you sure you wish to delete pipeline #${argv.id}?`, default: false
+                }])
+
+                if (!deleteConfirmed) {
+                    return
+                }
+
+                const data = await PipelineService.delete(argv.projectId, argv.id)
+
+                resolveResult(data, () => {
+                    Logger.print(`Pipeline #${argv.id} removed!`)
                 })
             })
         }

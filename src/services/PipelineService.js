@@ -18,6 +18,9 @@ const PipelineService = () => {
             body: JSON.stringify({
                 variables: []
             })
+        }),
+        delete: async (projectId, id) => ApiService.fetch(`/projects/${projectId}/pipelines/${id}`, {
+            method: 'DELETE'
         })
     })
 }
