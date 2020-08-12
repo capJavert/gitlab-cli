@@ -12,7 +12,7 @@ const PipelineService = () => {
 
             return ApiService.fetch(`/projects/${projectId}/pipelines?${urlParams.toString()}`, { method: 'GET' })
         },
-        get: async (projectId, id) => ApiService.fetch(`/projects/${projectId}/pipelines/${id}`, { method: 'GET' })
+        get: async (projectId, id, entity) => ApiService.fetch(`/projects/${projectId}/pipelines/${id}/${entity ? `/${entity}` : ''}`, { method: 'GET' })
     })
 }
 

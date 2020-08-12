@@ -50,11 +50,20 @@ const Pipeline = () => {
                     .positional('id', {
                         describe: 'pipeline id'
                     })
+                    .option('entity', {
+                        describe: 'get other entities for pipeline',
+                        choices: ['variables', 'test_report']
+                    })
             },
             handler: catchAll(async (argv) => {
-                const data = await PipelineService.get(argv.projectId, argv.id)
+                const data = await PipelineService.get(argv.projectId, argv.id, argv.entity)
 
                 resolveResult(data, () => {
+                    if (argv.entity && data.length === 0) {
+                        Logger.print(`No ${argv.entity}`)
+                        return
+                    }
+
                     Object.keys(data).forEach((key) => {
                         switch (key) {
                         case 'user':
