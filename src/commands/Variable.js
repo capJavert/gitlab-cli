@@ -46,7 +46,7 @@ const Variable = () => {
                     Logger.print('Variables')
                     Logger.print('---------')
                     data.forEach((item) => Logger.print(item.key))
-                })
+                }, argv)
             })
         },
         get: {
@@ -66,7 +66,7 @@ const Variable = () => {
 
                 resolveResult(data, () => {
                     Logger.print(data.value)
-                })
+                }, argv)
             })
         },
         create: {
@@ -93,7 +93,7 @@ const Variable = () => {
 
                 resolveResult(data, () => {
                     Logger.print(`Variable '${data.key}' created!`)
-                })
+                }, argv)
             })
         },
         update: {
@@ -120,7 +120,7 @@ const Variable = () => {
 
                 resolveResult(data, () => {
                     Logger.print(`Variable '${data.key}' updated!`)
-                })
+                }, argv)
             })
         },
         delete: {
@@ -148,7 +148,7 @@ const Variable = () => {
 
                 resolveResult(data, () => {
                     Logger.print(`Variable '${argv.name}' removed!`)
-                })
+                }, argv)
             })
         }
     })

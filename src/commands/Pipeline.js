@@ -37,7 +37,7 @@ const Pipeline = () => {
                         // eslint-disable-next-line camelcase
                         id, status, created_at, web_url
                     }) => Logger.print(id, status.toUpperCase(), created_at, web_url))
-                })
+                }, argv)
             })
         },
         get: {
@@ -76,7 +76,7 @@ const Pipeline = () => {
                             Logger.print(`${key}:`, data[key])
                         }
                     })
-                })
+                }, argv)
             })
         },
         create: {
@@ -99,7 +99,7 @@ const Pipeline = () => {
 
                 resolveResult(data, () => {
                     Logger.print(`Pipeline #${data.id} created and ${data.status}...`)
-                })
+                }, argv)
             })
         },
         update: {
@@ -127,7 +127,7 @@ const Pipeline = () => {
 
                 resolveResult(data, () => {
                     Logger.print(`Pipeline #${data.id} updated and ${data.status}...`)
-                })
+                }, argv)
             })
         },
         delete: {
@@ -155,7 +155,7 @@ const Pipeline = () => {
 
                 resolveResult(data, () => {
                     Logger.print(`Pipeline #${argv.id} removed!`)
-                })
+                }, argv)
             })
         }
     })
