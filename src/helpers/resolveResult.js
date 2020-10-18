@@ -2,7 +2,7 @@ const Logger = require('../services/Logger')
 
 const resolveResult = (data, onSuccess, argv) => {
     if (argv.raw) {
-        Logger.print(data)
+        Logger.print(JSON.stringify(data))
         return
     }
 
