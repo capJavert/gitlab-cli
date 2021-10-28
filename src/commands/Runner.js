@@ -42,7 +42,7 @@ const Runner = () => {
         },
         get: {
             command: 'runner-get <projectId> <id>',
-            describe: 'Get runner status',
+            describe: 'Get runner details',
             builder: globalArgs((yargs) => {
                 yargs
                     .positional('projectId', {
