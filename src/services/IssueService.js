@@ -17,14 +17,25 @@ const IssueService = () => {
             scope
         ) => {
             const urlParams = new URLSearchParams()
-            urlParams.append('page', page)
-            urlParams.append('per_page', perPage)
-            urlParams.append('search', search)
-            urlParams.append('state', state)
-            urlParams.append('assignee_username', assignee)
-            urlParams.append('order_by', orderBy)
-            urlParams.append('sort', sort)
-            urlParams.append('scope', scope)
+            const params = {
+                page,
+                perPage,
+                search,
+                state,
+                assignee,
+                orderBy,
+                sort,
+                scope
+            }
+            Object.keys(params).forEach((param) => {
+                const value = params[param]
+
+                if (!value) {
+                    return
+                }
+
+                urlParams.append(param, value)
+            })
 
             return ApiService.fetch(`/projects/${projectId}/issues?${urlParams.toString()}`, { method: 'GET' })
         },
